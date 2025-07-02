@@ -1,0 +1,47 @@
+# .gitignore for C# ASP.NET Core projects
+
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider project files
+.idea/
+*.sln.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Publish output
+publish/
+wwwroot/dist/
+wwwroot/node_modules/
+
+# NuGet packages
+*.nupkg
+packages/
+*.snupkg
+
+# Visual Studio Code workspace
+.vscode/
+
+# Others
+*.db
+
+# Rider specific files
+/packages/
+riderModule.iml
+/_ReSharper.Caches/

@@ -1,6 +1,6 @@
 namespace ShiftLoggerApi.Repositories;
 
-public class IEmployeeRepository
+public interface IShiftRepository
 {
     
 }

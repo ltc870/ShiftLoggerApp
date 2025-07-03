@@ -1,4 +1,4 @@
-namespace ShiftLoggerApi.Repositories;
+namespace ShiftLoggerApi.Repositories.Interfaces;
 
 public interface IShiftRepository
 {

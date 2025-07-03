@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using ShiftLoggerApi.Data;
 using ShiftLoggerApi.Repositories;
+using ShiftLoggerApi.Repositories.Interfaces;
+using ShiftLoggerApi.Services;
+using ShiftLoggerApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 
 builder.Services.AddScoped<IShiftRepository, ShiftRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 var app = builder.Build();
 

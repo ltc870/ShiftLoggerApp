@@ -8,6 +8,6 @@ public class Employee
     public int EmployeeId { get; set; }
     [Required]
     [MaxLength(100)]
-    public string? Name { get; set; }
+    public string Name { get; set; }
     public List<Shift>? Shifts { get; set; }
 }

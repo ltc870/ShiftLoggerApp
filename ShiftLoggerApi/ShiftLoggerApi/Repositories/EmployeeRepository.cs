@@ -12,17 +12,12 @@ public class EmployeeRepository : IEmployeeRepository
     {
         _dbContext = dbContext;
     }
-    public async Task CreateEmployeeAsync(EmployeeDto employeeDto)
+    public async Task CreateEmployeeAsync(Employee employee)
     {
         try
         {
-            Employee employee = new Employee
-            {
-                Name = employeeDto.Name,
-            };
             await _dbContext.Employees.AddAsync(employee);
             await _dbContext.SaveChangesAsync();
-            
         }
         catch (Exception e)
         {

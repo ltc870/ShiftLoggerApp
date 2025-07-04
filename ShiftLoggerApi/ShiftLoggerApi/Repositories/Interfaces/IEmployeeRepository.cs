@@ -5,5 +5,5 @@ namespace ShiftLoggerApi.Repositories.Interfaces;
 
 public interface IEmployeeRepository
 {
-    Task CreateEmployeeAsync(EmployeeDto employeeDto);
+    Task CreateEmployeeAsync(Employee employee);
 }

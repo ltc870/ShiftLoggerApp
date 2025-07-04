@@ -13,6 +13,15 @@ public class EmployeeService : IEmployeeService
     {
         _employeeRepository = employeeRepository;
     }
+    
+    public async Task<List<EmployeeDto>> GetAllEmployeesAsync()
+    {
+        List<Employee> employees = await _employeeRepository.GetAllEmployeesAsync();
+        List<EmployeeDto> employeeDtos = employees.Select(employee => new EmployeeDto(employee.EmployeeId, employee.Name)).ToList();
+        return employeeDtos;
+
+    }
+    
     public async Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto employeeDto)
     {
         Employee employee = new Employee
@@ -22,16 +31,10 @@ public class EmployeeService : IEmployeeService
         
         var entry = await _employeeRepository.CreateEmployeeAsync(employee);
         
-        EmployeeDto newEmployeeDto = new EmployeeDto(entry.Entity.Name);
+        EmployeeDto newEmployeeDto = new EmployeeDto(entry.Entity.EmployeeId, entry.Entity.Name);
         
         return newEmployeeDto;
     }
     
-    public async Task<List<EmployeeDto>> GetAllEmployeesAsync()
-    {
-        List<Employee> employees = await _employeeRepository.GetAllEmployeesAsync();
-        List<EmployeeDto> employeeDtos = employees.Select(employee => new EmployeeDto(employee.Name)).ToList();
-        return employeeDtos;
-
-    }
+    
 }

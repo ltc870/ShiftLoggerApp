@@ -1,3 +1,3 @@
 namespace ShiftLoggerApi.Dtos;
 
-public record EmployeeDto(string Name);
+public record EmployeeDto(int EmployeeId, string Name);

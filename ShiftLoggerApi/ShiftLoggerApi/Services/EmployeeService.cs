@@ -31,7 +31,7 @@ public class EmployeeService : IEmployeeService
         
         var entry = await _employeeRepository.CreateEmployeeAsync(employee);
         
-        EmployeeDto newEmployeeDto = new EmployeeDto(entry.Entity.EmployeeId, entry.Entity.Name);
+        EmployeeDto newEmployeeDto = new EmployeeDto(entry.EmployeeId, entry.Name);
         
         return newEmployeeDto;
     }

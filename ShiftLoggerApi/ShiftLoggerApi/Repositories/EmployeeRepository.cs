@@ -14,21 +14,6 @@ public class EmployeeRepository : IEmployeeRepository
     {
         _dbContext = dbContext;
     }
-    public async Task<EntityEntry<Employee>> CreateEmployeeAsync(Employee employee)
-    {
-        try
-        {
-            var entry = await _dbContext.Employees.AddAsync(employee);
-            await _dbContext.SaveChangesAsync();
-            return entry;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
-
     public Task<List<Employee>> GetAllEmployeesAsync()
     {
         try
@@ -41,4 +26,21 @@ public class EmployeeRepository : IEmployeeRepository
             throw;
         }
     }
+    
+    public async Task<Employee> CreateEmployeeAsync(Employee employee)
+    {
+        try
+        {
+            await _dbContext.Employees.AddAsync(employee);
+            await _dbContext.SaveChangesAsync();
+            return employee;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    
 }

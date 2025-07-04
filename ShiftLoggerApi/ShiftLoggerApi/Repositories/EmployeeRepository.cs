@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ShiftLoggerApi.Data;
 using ShiftLoggerApi.Dtos;
 using ShiftLoggerApi.Models;
@@ -18,6 +19,19 @@ public class EmployeeRepository : IEmployeeRepository
         {
             await _dbContext.Employees.AddAsync(employee);
             await _dbContext.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public Task<List<Employee>> GetAllEmployeesAsync()
+    {
+        try
+        {
+            return _dbContext.Employees.ToListAsync();
         }
         catch (Exception e)
         {

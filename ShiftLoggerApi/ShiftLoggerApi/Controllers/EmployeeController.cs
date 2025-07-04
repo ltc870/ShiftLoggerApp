@@ -14,6 +14,21 @@ public class EmployeeController : BaseController
     {
         _employeeService = employeeService;
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllEmployeesAsync()
+    {
+        try
+        {
+            List<EmployeeDto> employeeDto = await _employeeService.GetAllEmployeesAsync();
+            return Ok(employeeDto);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw;
+        }
+    }
     
     [HttpPost]
     public async Task<IActionResult> CreateEmployeeAsync([FromBody] EmployeeDto employeeDto)
@@ -26,9 +41,9 @@ public class EmployeeController : BaseController
             await _employeeService.CreateEmployeeAsync(employeeDto);
             return Ok(employeeDto);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
+            Console.WriteLine(ex);
             throw;
         }
     }

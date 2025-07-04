@@ -15,7 +15,7 @@ public class EmployeeController : BaseController
         _employeeService = employeeService;
     }
 
-    [HttpGet]
+    [HttpGet("GetAllEmployees")]
     public async Task<IActionResult> GetAllEmployeesAsync()
     {
         try
@@ -30,7 +30,7 @@ public class EmployeeController : BaseController
         }
     }
     
-    [HttpPost]
+    [HttpPost("CreateEmployee")]
     public async Task<IActionResult> CreateEmployeeAsync([FromBody] EmployeeDto employeeDto)
     {
         if (!ModelState.IsValid)
@@ -38,8 +38,8 @@ public class EmployeeController : BaseController
 
         try
         {
-            await _employeeService.CreateEmployeeAsync(employeeDto);
-            return Ok(employeeDto);
+            var createdEmployee = await _employeeService.CreateEmployeeAsync(employeeDto);
+            return Ok(createdEmployee);
         }
         catch (Exception ex)
         {

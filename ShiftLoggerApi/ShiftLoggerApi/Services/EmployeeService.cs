@@ -20,8 +20,11 @@ public class EmployeeService : IEmployeeService
             Name = employeeDto.Name,
         };
         
-        await _employeeRepository.CreateEmployeeAsync(employee);
-        return employeeDto;
+        var entry = await _employeeRepository.CreateEmployeeAsync(employee);
+        
+        EmployeeDto newEmployeeDto = new EmployeeDto(entry.Entity.Name);
+        
+        return newEmployeeDto;
     }
     
     public async Task<List<EmployeeDto>> GetAllEmployeesAsync()

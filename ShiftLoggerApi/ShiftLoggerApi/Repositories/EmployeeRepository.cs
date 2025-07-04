@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ShiftLoggerApi.Data;
 using ShiftLoggerApi.Dtos;
 using ShiftLoggerApi.Models;
@@ -13,12 +14,13 @@ public class EmployeeRepository : IEmployeeRepository
     {
         _dbContext = dbContext;
     }
-    public async Task CreateEmployeeAsync(Employee employee)
+    public async Task<EntityEntry<Employee>> CreateEmployeeAsync(Employee employee)
     {
         try
         {
-            await _dbContext.Employees.AddAsync(employee);
+            var entry = await _dbContext.Employees.AddAsync(employee);
             await _dbContext.SaveChangesAsync();
+            return entry;
         }
         catch (Exception e)
         {

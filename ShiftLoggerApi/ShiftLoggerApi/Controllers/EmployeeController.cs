@@ -30,7 +30,7 @@ public class EmployeeController : BaseController
         }
     }
 
-    [HttpGet("GetEmployeeById/{id}")]
+    [HttpGet("GetEmployeeById/{id:int}")]
     public async Task<IActionResult> GetEmployeeByIdAsync(int id)
     {
         try

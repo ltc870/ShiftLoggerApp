@@ -21,7 +21,20 @@ public class EmployeeService : IEmployeeService
         return employeeDtos;
 
     }
-    
+
+    public async Task<EmployeeDto> GetEmployeeByIdAsync(int id)
+    {
+        Employee employee = await _employeeRepository.GetEmployeeByIdAsync(id);
+        
+        if (employee == null)
+        {
+            throw new KeyNotFoundException($"Employee with ID {id} not found.");
+        }
+        
+        EmployeeDto employeeDto = new EmployeeDto(employee.EmployeeId, employee.Name);
+        return employeeDto;
+    }
+
     public async Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto employeeDto)
     {
         Employee employee = new Employee

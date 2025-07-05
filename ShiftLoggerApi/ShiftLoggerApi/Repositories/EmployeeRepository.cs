@@ -26,7 +26,27 @@ public class EmployeeRepository : IEmployeeRepository
             throw;
         }
     }
-    
+
+    public async Task<Employee> GetEmployeeByIdAsync(int id)
+    {
+        try
+        {
+            var employee = await _dbContext.Employees.FindAsync(id);
+            
+            if (employee == null)
+            {
+                throw new KeyNotFoundException($"Employee with ID {id} not found.");
+            }
+            
+            return employee;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
     public async Task<Employee> CreateEmployeeAsync(Employee employee)
     {
         try

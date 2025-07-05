@@ -29,6 +29,21 @@ public class EmployeeController : BaseController
             throw;
         }
     }
+
+    [HttpGet("GetEmployeeById/{id}")]
+    public async Task<IActionResult> GetEmployeeByIdAsync(int id)
+    {
+        try
+        {
+            var employeeDto = await _employeeService.GetEmployeeByIdAsync(id);
+            return Ok(employeeDto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
     
     [HttpPost("CreateEmployee")]
     public async Task<IActionResult> CreateEmployeeAsync([FromBody] EmployeeDto employeeDto)

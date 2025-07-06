@@ -15,9 +15,17 @@ public class ShiftService : IShiftService
         _shiftRepository = shiftRepository;
     }
     
-    public Task<List<ShiftDto>> GetAllShiftsAsync()
+    public async Task<List<ShiftDto>> GetAllShiftsAsync()
     {
-        throw new NotImplementedException();
+        List<Shift> shifts = await _shiftRepository.GetAllShiftsAsync();
+        
+        List<ShiftDto> shiftDtos = shifts.Select(shift => new ShiftDto(
+            shift.ShiftId,
+            shift.ShiftStart,
+            shift.ShiftEnd,
+            shift.EmployeeId)).ToList();
+        
+        return shiftDtos;
     }
     public Task<ShiftDto?> GetShiftByIdAsync(int shiftId)
     {

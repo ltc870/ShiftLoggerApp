@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ShiftLoggerApi.Data;
 using ShiftLoggerApi.Models;
 using ShiftLoggerApi.Repositories.Interfaces;
@@ -13,9 +14,17 @@ public class ShiftRepository : IShiftRepository
         _dbContext = dbContext;
     }
     
-    public Task<List<Shift>> GetAllShiftsAsync()
+    public async Task<List<Shift>> GetAllShiftsAsync()
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await _dbContext.Shifts.ToListAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public Task<Shift?> GetShiftByIdAsync(int shiftId)

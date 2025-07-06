@@ -14,11 +14,11 @@ public class EmployeeRepository : IEmployeeRepository
     {
         _dbContext = dbContext;
     }
-    public Task<List<Employee>> GetAllEmployeesAsync()
+    public async Task<List<Employee>> GetAllEmployeesAsync()
     {
         try
         {
-            return _dbContext.Employees.ToListAsync();
+            return await _dbContext.Employees.ToListAsync();
         }
         catch (Exception e)
         {

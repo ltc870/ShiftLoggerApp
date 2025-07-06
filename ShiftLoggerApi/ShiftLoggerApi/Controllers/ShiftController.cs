@@ -8,11 +8,32 @@ namespace ShiftLoggerApi.Controllers;
 [Microsoft.AspNetCore.Components.Route("api/[controller]")]
 public class ShiftController : BaseController
 {
-    private readonly IShiftService _service;
+    private readonly IShiftService _shiftService;
     
-    public ShiftController(IShiftService service)
+    public ShiftController(IShiftService shiftService)
     {
-        _service = service;
+        _shiftService = shiftService;
+    }
+
+    [HttpGet("GetAllShifts")]
+    public async Task<IActionResult> GetAllShiftsAsync()
+    {
+        try
+        {
+            List<ShiftDto> shiftsDto = await _shiftService.GetAllShiftsAsync();
+            
+            if (shiftsDto == null || !shiftsDto.Any())
+            {
+                return NotFound("No shifts found.");
+            }
+            
+            return Ok(shiftsDto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
     
     [HttpPost("CreateShift")]
@@ -25,7 +46,7 @@ public class ShiftController : BaseController
                 return BadRequest("Shift data is null.");
             }
 
-            var createdShift = await _service.CreateShiftAsync(shiftDto);
+            var createdShift = await _shiftService.CreateShiftAsync(shiftDto);
             return Ok(createdShift);
         }
         catch (Exception ex)

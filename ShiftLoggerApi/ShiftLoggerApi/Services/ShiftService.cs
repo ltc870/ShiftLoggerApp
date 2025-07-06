@@ -1,6 +1,61 @@
+using ShiftLoggerApi.Dtos;
+using ShiftLoggerApi.Models;
+using ShiftLoggerApi.Repositories.Interfaces;
+using ShiftLoggerApi.Services.Interfaces;
+
 namespace ShiftLoggerApi.Services;
 
-public class ShiftService
+public class ShiftService : IShiftService
 {
     
+    private readonly IShiftRepository _shiftRepository;
+    
+    public ShiftService(IShiftRepository shiftRepository)
+    {
+        _shiftRepository = shiftRepository;
+    }
+    
+    public Task<List<ShiftDto>> GetAllShiftsAsync()
+    {
+        throw new NotImplementedException();
+    }
+    public Task<ShiftDto?> GetShiftByIdAsync(int shiftId)
+    {
+        throw new NotImplementedException();
+    }
+    
+    public async Task<ShiftDto> CreateShiftAsync(ShiftDto shiftDto)
+    {
+        Shift shift = new Shift
+        {
+            ShiftId = shiftDto.ShiftId,
+            ShiftStart = shiftDto.ShiftStart,
+            ShiftEnd = shiftDto.ShiftEnd,
+            ShiftDuration = shiftDto.ShiftEnd - shiftDto.ShiftStart,
+            EmployeeId = shiftDto.EmployeeId
+        };
+        
+        var entry = await _shiftRepository.CreateShiftAsync(shift);
+        
+        return new ShiftDto(
+            entry.ShiftId,
+            entry.ShiftStart,
+            entry.ShiftEnd,
+            entry.EmployeeId);
+    }
+    
+    public Task<ShiftDto> UpdateShiftAsync(ShiftDto shiftDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> DeleteShiftAsync(int shiftId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<ShiftDto>> GetShiftsByEmployeeIdAsync(int employeeId)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using ShiftLoggerApi.Dtos;
-using ShiftLoggerApi.Models;
-using ShiftLoggerApi.Services;
 using ShiftLoggerApi.Services.Interfaces;
 
 namespace ShiftLoggerApi.Controllers;
@@ -75,7 +73,7 @@ public class EmployeeController : BaseController
         }
     }
 
-    [HttpPut("UpdateEmployee/{id:int}")]
+    [HttpPut("UpdateEmployeeById/{id:int}")]
     public async Task<IActionResult> UpdateEmployeeByIdAsync(int id, [FromBody] EmployeeDto employeeDto)
     {
         if (!ModelState.IsValid)
@@ -93,6 +91,30 @@ public class EmployeeController : BaseController
             }
 
             return Ok(updatedEmployeeDto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    [HttpDelete("DeleteEmployeeById/{id:int}")]
+    public async Task<IActionResult> DeleteEmployeeByIdAsync(int id)
+    {
+        try
+        {
+            var employeeDto = await _employeeService.GetEmployeeByIdAsync(id);
+            
+            if (employeeDto == null)
+            {
+                return NotFound($"Employee with ID {id} not found.");
+            }
+            
+            // Assuming you have a method in the service to delete an employee
+            await _employeeService.DeleteEmployeeByIdAsync(id);
+            
+            return Ok($"Employee with ID {id} deleted successfully.");
         }
         catch (Exception e)
         {

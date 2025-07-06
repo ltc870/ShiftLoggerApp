@@ -85,7 +85,7 @@ public class EmployeeController : BaseController
 
         try
         {
-            var updatedEmployee = await_employeeService.UpdateEmployeeAsync(id, employeeDto);
+            var updatedEmployee = await _employeeService.UpdateEmployeeAsync(id, employeeDto);
             if (updatedEmployee == null)
             {
                 return NotFound($"Employee with ID {id} not found.");

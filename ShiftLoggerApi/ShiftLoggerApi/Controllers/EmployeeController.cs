@@ -85,13 +85,14 @@ public class EmployeeController : BaseController
 
         try
         {
-            var updatedEmployee = await _employeeService.UpdateEmployeeAsync(id, employeeDto);
-            if (updatedEmployee == null)
+            var updatedEmployeeDto = await _employeeService.UpdateEmployeeByIdAsync(id, employeeDto);
+            
+            if (updatedEmployeeDto == null)
             {
                 return NotFound($"Employee with ID {id} not found.");
             }
 
-            return Ok(updatedEmployee);
+            return Ok(updatedEmployeeDto);
         }
         catch (Exception e)
         {

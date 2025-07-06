@@ -48,6 +48,32 @@ public class EmployeeService : IEmployeeService
         
         return newEmployeeDto;
     }
-    
-    
+
+    public async Task<EmployeeDto> UpdateEmployeeByIdAsync(int id, EmployeeDto employeeDto)
+    {
+        try
+        {
+            Employee employee = new Employee
+            {
+                EmployeeId = id,
+                Name = employeeDto.Name,
+            };
+            
+            var updateEmployee = await _employeeRepository.UpdateEmployeeByIdAsync(id, employee);
+            
+            if (updateEmployee == null)
+            {
+                throw new KeyNotFoundException($"Employee with ID {id} not found.");
+            }
+            
+            EmployeeDto updatedEmployeeDto = new EmployeeDto(updateEmployee.EmployeeId, updateEmployee.Name);
+            
+            return updatedEmployeeDto;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

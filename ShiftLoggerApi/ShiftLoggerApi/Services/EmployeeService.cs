@@ -1,6 +1,5 @@
 using ShiftLoggerApi.Dtos;
 using ShiftLoggerApi.Models;
-using ShiftLoggerApi.Repositories;
 using ShiftLoggerApi.Repositories.Interfaces;
 using ShiftLoggerApi.Services.Interfaces;
 
@@ -69,6 +68,19 @@ public class EmployeeService : IEmployeeService
             EmployeeDto updatedEmployeeDto = new EmployeeDto(updateEmployee.EmployeeId, updateEmployee.Name);
             
             return updatedEmployeeDto;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task DeleteEmployeeByIdAsync(int id)
+    {
+        try
+        { 
+            await _employeeRepository.DeleteEmployeeByIdAsync(id);
         }
         catch (Exception e)
         {

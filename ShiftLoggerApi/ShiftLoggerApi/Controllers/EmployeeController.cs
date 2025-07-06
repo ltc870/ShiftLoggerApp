@@ -104,14 +104,11 @@ public class EmployeeController : BaseController
     {
         try
         {
-            var employeeDto = await _employeeService.GetEmployeeByIdAsync(id);
-            
-            if (employeeDto == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound($"Employee with ID {id} not found.");
+                return BadRequest(ModelState);
             }
             
-            // Assuming you have a method in the service to delete an employee
             await _employeeService.DeleteEmployeeByIdAsync(id);
             
             return Ok($"Employee with ID {id} deleted successfully.");

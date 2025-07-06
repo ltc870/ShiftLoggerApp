@@ -84,4 +84,26 @@ public class EmployeeRepository : IEmployeeRepository
             throw;
         }
     }
+
+    public async Task DeleteEmployeeByIdAsync(int id)
+    {
+        try
+        {
+            var employee = await _dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
+            
+            if (employee == null)
+            {
+                throw new KeyNotFoundException($"Employee with ID {id} not found.");
+            }
+            
+            _dbContext.Employees.Remove(employee);
+            await _dbContext.SaveChangesAsync();
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

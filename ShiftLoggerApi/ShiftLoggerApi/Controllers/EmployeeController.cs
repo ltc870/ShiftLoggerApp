@@ -21,6 +21,12 @@ public class EmployeeController : BaseController
         try
         {
             List<EmployeeDto> employeeDto = await _employeeService.GetAllEmployeesAsync();
+            
+            if (!employeeDto.Any())
+            {
+                return NotFound("No employees found.");
+            }
+            
             return Ok(employeeDto);
         }
         catch (Exception ex)
@@ -36,6 +42,12 @@ public class EmployeeController : BaseController
         try
         {
             var employeeDto = await _employeeService.GetEmployeeByIdAsync(id);
+            
+            if (employeeDto == null)
+            {
+                return NotFound($"Employee with ID {id} not found.");
+            }
+            
             return Ok(employeeDto);
         }
         catch (Exception e)
@@ -59,6 +71,31 @@ public class EmployeeController : BaseController
         catch (Exception ex)
         {
             Console.WriteLine(ex);
+            throw;
+        }
+    }
+
+    [HttpPut("UpdateEmployee/{id:int}")]
+    public async Task<IActionResult> UpdateEmployeeByIdAsync(int id, [FromBody] EmployeeDto employeeDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            var updatedEmployee = await_employeeService.UpdateEmployeeAsync(id, employeeDto);
+            if (updatedEmployee == null)
+            {
+                return NotFound($"Employee with ID {id} not found.");
+            }
+
+            return Ok(updatedEmployee);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
             throw;
         }
     }

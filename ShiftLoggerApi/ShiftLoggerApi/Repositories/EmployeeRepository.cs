@@ -62,5 +62,26 @@ public class EmployeeRepository : IEmployeeRepository
         }
     }
 
-    
+    public async Task<Employee> UpdateEmployeeByIdAsync(int id, Employee employee)
+    {
+        try
+        {
+            var employeeToUpdate = await _dbContext.Employees.FindAsync(id);
+            
+            if (employeeToUpdate == null)
+            {
+                throw new KeyNotFoundException($"Employee with ID {id} not found.");
+            }
+            
+            employeeToUpdate.Name = employee.Name;
+
+            await _dbContext.SaveChangesAsync();
+            return employeeToUpdate;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

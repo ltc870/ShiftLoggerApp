@@ -35,6 +35,32 @@ public class ShiftController : BaseController
             throw;
         }
     }
+
+    [HttpGet("GetShiftById/{id:int}")]
+    public async Task<IActionResult> GetShiftByIdAsync(int id)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        try
+        {
+            var shiftDto = await _shiftService.GetShiftByIdAsync(id);
+
+            if (shiftDto == null)
+            {
+                return NotFound($"Shift with ID {id} was not found.");
+            }
+
+            return Ok(shiftDto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
     
     [HttpPost("CreateShift")]
     public async Task<IActionResult> CreateShiftAsync([FromBody] ShiftDto shiftDto)

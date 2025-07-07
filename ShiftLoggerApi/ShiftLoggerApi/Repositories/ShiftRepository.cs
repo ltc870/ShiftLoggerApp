@@ -27,7 +27,7 @@ public class ShiftRepository : IShiftRepository
         }
     }
 
-    public async Task<Shift?> GetShiftByIdAsync(int id)
+    public async Task<Shift> GetShiftByIdAsync(int id)
     {
         try
         {

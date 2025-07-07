@@ -27,7 +27,8 @@ public class ShiftService : IShiftService
         
         return shiftDtos;
     }
-    public async Task<ShiftDto?> GetShiftByIdAsync(int id)
+    
+    public async Task<ShiftDto> GetShiftByIdAsync(int id)
     {
         var shift = await _shiftRepository.GetShiftByIdAsync(id);
         

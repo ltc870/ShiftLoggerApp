@@ -8,6 +8,6 @@ public interface IShiftRepository
     Task<Shift> GetShiftByIdAsync(int shiftId);
     Task<Shift> CreateShiftAsync(Shift shift);
     Task<Shift> UpdateShiftAsync(Shift shift);
-    Task<bool> DeleteShiftAsync(int shiftId);
+    Task DeleteShiftAsync(int shiftId);
     Task<List<Shift>> GetShiftsByEmployeeIdAsync(int employeeId);
 }

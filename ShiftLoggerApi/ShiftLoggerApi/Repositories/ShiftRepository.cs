@@ -57,7 +57,7 @@ public class ShiftRepository : IShiftRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Shift>> GetShiftsByEmployeeIdAsync(int employeeId)
+    public Task<List<Shift>> GetShiftsByEmployeeIdAsync(int employeeId)
     {
         throw new NotImplementedException();
     }

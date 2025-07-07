@@ -62,7 +62,7 @@ public class ShiftService : IShiftService
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<ShiftDto>> GetShiftsByEmployeeIdAsync(int employeeId)
+    public Task<List<ShiftDto>> GetShiftsByEmployeeIdAsync(int employeeId)
     {
         throw new NotImplementedException();
     }

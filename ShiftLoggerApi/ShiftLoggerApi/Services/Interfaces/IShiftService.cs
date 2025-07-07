@@ -9,5 +9,5 @@ public interface IShiftService
     Task<ShiftDto> CreateShiftAsync(ShiftDto shiftDto);
     Task<ShiftDto> UpdateShiftAsync(ShiftDto shiftDto);
     Task<bool> DeleteShiftAsync(int shiftId);
-    Task<IEnumerable<ShiftDto>> GetShiftsByEmployeeIdAsync(int employeeId);
+    Task<List<ShiftDto>> GetShiftsByEmployeeIdAsync(int employeeId);
 }

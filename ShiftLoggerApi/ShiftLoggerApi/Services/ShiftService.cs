@@ -27,9 +27,21 @@ public class ShiftService : IShiftService
         
         return shiftDtos;
     }
-    public Task<ShiftDto?> GetShiftByIdAsync(int shiftId)
+    public async Task<ShiftDto?> GetShiftByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var shift = await _shiftRepository.GetShiftByIdAsync(id);
+        
+        if (shift == null)
+        {
+            throw new KeyNotFoundException($"Shift with ID {id} not found.");
+        }
+        ShiftDto shiftDto = new ShiftDto(
+            shift.ShiftId,
+            shift.ShiftStart,
+            shift.ShiftEnd,
+            shift.EmployeeId);
+        
+        return shiftDto;
     }
     
     public async Task<ShiftDto> CreateShiftAsync(ShiftDto shiftDto)

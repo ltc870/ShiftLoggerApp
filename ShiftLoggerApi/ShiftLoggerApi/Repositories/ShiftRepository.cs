@@ -27,9 +27,24 @@ public class ShiftRepository : IShiftRepository
         }
     }
 
-    public Task<Shift?> GetShiftByIdAsync(int shiftId)
+    public async Task<Shift?> GetShiftByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var shift = await _dbContext.Shifts.FindAsync(id);
+            
+            if (shift == null)
+            {
+                throw new KeyNotFoundException($"Shift with ID {id} not found.");
+            }
+            
+            return shift;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task<Shift> CreateShiftAsync(Shift shift)

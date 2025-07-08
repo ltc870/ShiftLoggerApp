@@ -62,7 +62,7 @@ public class ShiftRepository : IShiftRepository
         }
     }
 
-    public Task<Shift> UpdateShiftAsync(Shift shift)
+    public Task<Shift> UpdateShiftByIdAsync(int id, Shift shift)
     {
         throw new NotImplementedException();
     }

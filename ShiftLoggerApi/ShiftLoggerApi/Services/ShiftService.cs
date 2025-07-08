@@ -65,9 +65,39 @@ public class ShiftService : IShiftService
             entry.EmployeeId);
     }
     
-    public Task<ShiftDto> UpdateShiftAsync(ShiftDto shiftDto)
+    public async Task<ShiftDto> UpdateShiftByIdAsync(int id, ShiftDto shiftDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            Shift shift = new Shift()
+            {
+                EmployeeId = id,
+                ShiftStart = shiftDto.ShiftStart,
+                ShiftEnd = shiftDto.ShiftEnd,
+                ShiftDuration = shiftDto.ShiftEnd - shiftDto.ShiftStart,
+                ShiftId = shiftDto.ShiftId
+            };
+
+            var updatedShift = await _shiftRepository.UpdateShiftByIdAsync(id, shift);
+            
+            if (updatedShift == null)
+            {
+                throw new KeyNotFoundException($"Shift with ID {id} not found.");
+            }
+            
+            ShiftDto updatedShiftDto = new ShiftDto(
+                updatedShift.ShiftId,
+                updatedShift.ShiftStart,
+                updatedShift.ShiftEnd,
+                updatedShift.EmployeeId);
+
+            return updatedShiftDto;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public Task<bool> DeleteShiftAsync(int shiftId)

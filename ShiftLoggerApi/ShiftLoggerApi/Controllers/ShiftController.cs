@@ -81,4 +81,35 @@ public class ShiftController : BaseController
             return StatusCode(500, "Internal server error");
         }
     }
+    
+    [HttpPut("UpdateShiftById/{id:int}")]
+    public async Task<IActionResult> UpdateShiftByIdAsync(int id, [FromBody] ShiftDto shiftDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        try
+        {
+            if (shiftDto == null)
+            {
+                return BadRequest("Shift data is null.");
+            }
+
+            var updatedShift = await _shiftService.UpdateShiftByIdAsync(id, shiftDto);
+            
+            if (updatedShift == null)
+            {
+                return NotFound($"Shift with ID {id} was not found.");
+            }
+
+            return Ok(updatedShift);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

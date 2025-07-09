@@ -98,7 +98,6 @@ public class EmployeeRepository : IEmployeeRepository
             
             _dbContext.Employees.Remove(employee);
             await _dbContext.SaveChangesAsync();
-            
         }
         catch (Exception e)
         {

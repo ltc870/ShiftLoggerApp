@@ -88,9 +88,25 @@ public class ShiftRepository : IShiftRepository
         }
     }
 
-    public Task DeleteShiftByIdAsync(int shiftId)
+    public async Task DeleteShiftByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var shift = await _dbContext.Shifts.FirstOrDefaultAsync(shift => shift.ShiftId == id);
+
+            if (shift == null)
+            {
+                throw new KeyNotFoundException($"Shift with ID {id} not found.");
+            }
+
+            _dbContext.Shifts.Remove(shift);
+            await _dbContext.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public Task<List<Shift>> GetShiftsByEmployeeIdAsync(int employeeId)

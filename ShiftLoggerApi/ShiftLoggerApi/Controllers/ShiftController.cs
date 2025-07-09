@@ -124,6 +124,8 @@ public class ShiftController : BaseController
             }
 
             await _shiftService.DeleteShiftByIdAsync(id);
+            
+            return Ok($"Shift with ID {id} has been deleted successfully.");
         }
         catch (Exception e)
         {

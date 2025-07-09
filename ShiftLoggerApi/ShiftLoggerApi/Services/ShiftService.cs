@@ -100,9 +100,17 @@ public class ShiftService : IShiftService
         }
     }
 
-    public Task DeleteShiftByIdAsync(int shiftId)
+    public async Task DeleteShiftByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _shiftRepository.DeleteShiftByIdAsync(id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public Task<List<ShiftDto>> GetShiftsByEmployeeIdAsync(int employeeId)

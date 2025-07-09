@@ -100,7 +100,7 @@ public class ShiftService : IShiftService
         }
     }
 
-    public Task<bool> DeleteShiftAsync(int shiftId)
+    public Task DeleteShiftByIdAsync(int shiftId)
     {
         throw new NotImplementedException();
     }

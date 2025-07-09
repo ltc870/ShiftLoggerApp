@@ -88,7 +88,7 @@ public class ShiftRepository : IShiftRepository
         }
     }
 
-    public Task DeleteShiftAsync(int shiftId)
+    public Task DeleteShiftByIdAsync(int shiftId)
     {
         throw new NotImplementedException();
     }

@@ -8,6 +8,6 @@ public interface IShiftService
     Task<ShiftDto?> GetShiftByIdAsync(int shiftId);
     Task<ShiftDto> CreateShiftAsync(ShiftDto shiftDto);
     Task<ShiftDto> UpdateShiftByIdAsync(int id, ShiftDto shiftDto);
-    Task<bool> DeleteShiftAsync(int shiftId);
+    Task DeleteShiftByIdAsync(int shiftId);
     Task<List<ShiftDto>> GetShiftsByEmployeeIdAsync(int employeeId);
 }

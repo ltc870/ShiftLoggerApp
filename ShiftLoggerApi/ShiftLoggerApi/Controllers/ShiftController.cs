@@ -112,4 +112,23 @@ public class ShiftController : BaseController
             throw;
         }
     }
+
+    [HttpDelete("DeleteShiftById/{id:int}")]
+    public async Task<IActionResult> DeleteShiftByIdAsync(int id)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _shiftService.DeleteShiftByIdAsync(id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

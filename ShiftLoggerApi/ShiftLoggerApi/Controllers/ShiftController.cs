@@ -116,16 +116,37 @@ public class ShiftController : BaseController
     [HttpDelete("DeleteShiftById/{id:int}")]
     public async Task<IActionResult> DeleteShiftByIdAsync(int id)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
         try
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             await _shiftService.DeleteShiftByIdAsync(id);
             
             return Ok($"Shift with ID {id} has been deleted successfully.");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    [HttpGet("GetShiftsByEmployeeId/{employeeId:int}")]
+    public async Task<IActionResult> GetShiftsByEmployeeIdAsync(int id)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        try
+        {
+            var shiftsDto = await _shiftService.GetShiftsByEmployeeIdAsync(id);
+
+            return Ok(shiftsDto);
         }
         catch (Exception e)
         {

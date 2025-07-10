@@ -113,8 +113,29 @@ public class ShiftService : IShiftService
         }
     }
 
-    public Task<List<ShiftDto>> GetShiftsByEmployeeIdAsync(int employeeId)
+    public async Task<List<ShiftDto>> GetShiftsByEmployeeIdAsync(int employeeId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var shifts = await _shiftRepository.GetShiftsByEmployeeIdAsync(employeeId);
+            
+            if (shifts == null || !shifts.Any())
+            {
+                throw new KeyNotFoundException($"No shifts found for employee with ID {employeeId}.");
+            }
+            
+            List<ShiftDto> shiftDtos = shifts.Select(shift => new ShiftDto(
+                shift.ShiftId,
+                shift.ShiftStart,
+                shift.ShiftEnd,
+                shift.EmployeeId)).ToList();
+
+            return shiftDtos;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

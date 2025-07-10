@@ -109,8 +109,23 @@ public class ShiftRepository : IShiftRepository
         }
     }
 
-    public Task<List<Shift>> GetShiftsByEmployeeIdAsync(int employeeId)
+    public async Task<List<Shift>> GetShiftsByEmployeeIdAsync(int employeeId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var shifts = _dbContext.Shifts.Where(shift => shift.EmployeeId == employeeId);
+
+            if (shifts == null)
+            {
+                throw new KeyNotFoundException($"Shifts with EmployeeId {employeeId} not found.");
+            }
+
+            return await shifts.ToListAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

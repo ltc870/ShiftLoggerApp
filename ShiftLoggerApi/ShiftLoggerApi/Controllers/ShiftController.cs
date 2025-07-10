@@ -134,7 +134,7 @@ public class ShiftController : BaseController
         }
     }
 
-    [HttpGet("GetShiftsByEmployeeId/{employeeId:int}")]
+    [HttpGet("GetShiftsByEmployeeId/{id:int}")]
     public async Task<IActionResult> GetShiftsByEmployeeIdAsync(int id)
     {
         if (!ModelState.IsValid)

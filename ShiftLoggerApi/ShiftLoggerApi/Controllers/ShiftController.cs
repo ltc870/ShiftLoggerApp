@@ -145,6 +145,11 @@ public class ShiftController : BaseController
         try
         {
             var shiftsDto = await _shiftService.GetShiftsByEmployeeIdAsync(id);
+            
+            if (shiftsDto == null || !shiftsDto.Any())
+            {
+                return NotFound($"No shifts found for employee with ID {id}.");
+            }
 
             return Ok(shiftsDto);
         }

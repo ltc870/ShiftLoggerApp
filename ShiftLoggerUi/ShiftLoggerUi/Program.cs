@@ -4,10 +4,10 @@ namespace ShiftLoggerUi;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         Console.WriteLine("Hello, World!");
         
-        RunProgramUtil.RunProgram();
+        await RunProgramUtil.RunProgram();
     }
 }

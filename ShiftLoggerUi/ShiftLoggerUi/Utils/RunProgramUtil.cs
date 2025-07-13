@@ -1,16 +1,18 @@
+using ShiftLoggerUi.Services;
+
 namespace ShiftLoggerUi.Utils;
 
 public class RunProgramUtil
 {
-    public static void RunProgram()
+    public static async Task RunProgram()
     {
         Console.WriteLine("Welcome to the Shift Logger Application!");
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
-        UserOptions();
+        await UserOptions();
     }
 
-    private static void UserOptions()
+    private static async Task UserOptions()
     {
         Console.Clear();
         bool applicationRunning = true;
@@ -37,7 +39,7 @@ public class RunProgramUtil
                     break;
                 case "1":
                     Console.WriteLine("Manage Employees selected.");
-                    ManageEmployees();
+                    await ManageEmployees();
                     break;
                 case "2":
                     Console.WriteLine("Manage Shifts selected.");
@@ -52,10 +54,11 @@ public class RunProgramUtil
         }
     }
 
-    private static void ManageEmployees()
+    private static async Task ManageEmployees()
     {
         Console.Clear();
         bool employeeManagementRunning = true;
+        EmployeeService employeeService = new EmployeeService();
         
         
         while (employeeManagementRunning)
@@ -89,7 +92,7 @@ public class RunProgramUtil
                     break;
                 case "3":
                     Console.WriteLine("Add An Employee selected.");
-                    // Call method to add an employee
+                    await employeeService.CreateEmployeeAsync();
                     break;
                 case "4":
                     Console.WriteLine("Update An Employee selected.");

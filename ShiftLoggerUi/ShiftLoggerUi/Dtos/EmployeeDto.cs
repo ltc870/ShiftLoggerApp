@@ -1,6 +1,3 @@
 namespace ShiftLoggerUi.Dtos;
 
-public class EmployeeDto
-{
-    
-}
+public record EmployeeDto(int EmployeeId, string Name);

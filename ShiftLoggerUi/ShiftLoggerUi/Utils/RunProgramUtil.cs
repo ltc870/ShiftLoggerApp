@@ -59,7 +59,7 @@ public class RunProgramUtil
     {
         Console.Clear();
         bool employeeManagementRunning = true;
-        EmployeeService employeeService = new EmployeeService(new EmployeeRepository());
+        EmployeeService employeeService = new EmployeeService(new EmployeeRepository(new HttpClient()));
         
         
         while (employeeManagementRunning)
@@ -85,7 +85,7 @@ public class RunProgramUtil
                     break;
                 case "1":
                     Console.WriteLine("View All Employees selected.");
-                    // Call method to view all employees
+                    await employeeService.GetAllEmployeesAsync();
                     break;
                 case "2":
                     Console.WriteLine("View An Employee selected.");

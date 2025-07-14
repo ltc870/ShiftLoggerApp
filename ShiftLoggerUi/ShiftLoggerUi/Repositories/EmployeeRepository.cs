@@ -5,9 +5,28 @@ namespace ShiftLoggerUi.Repositories;
 
 public class EmployeeRepository : IEmployeeRepository
 {
-    public Task<List<EmployeeDto>> GetAllEmployeesAsync()
+
+    private readonly HttpClient _httpClient;
+    
+    public EmployeeRepository(HttpClient httpClient)
     {
-        throw new NotImplementedException();
+        _httpClient = httpClient;
+        _httpClient.BaseAddress = new Uri("https://localhost:7145/");
+    }
+    
+    public async Task<List<EmployeeDto>> GetAllEmployeesAsync()
+    {
+        var employees = await _httpClient.GetAsync("api/Employee/GetAllEmployees");
+        if (employees.IsSuccessStatusCode)
+        {
+            return await employees.Content.ReadFromJsonAsync<List<EmployeeDto>>() ?? new List<EmployeeDto>();
+        }
+        else
+        {
+            string error = await employees.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error fetching employees: {employees.StatusCode} - {error}");
+            return new List<EmployeeDto>();
+        }
     }
 
     public Task<EmployeeDto> GetEmployeeByIdAsync(int id)
@@ -17,9 +36,7 @@ public class EmployeeRepository : IEmployeeRepository
 
     public async Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto employee)
     {
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri("https://localhost:7145/");
-        HttpResponseMessage response = await client.PostAsJsonAsync("api/Employee/CreateEmployee", employee);
+        HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Employee/CreateEmployee", employee);
         if (response.IsSuccessStatusCode)
         {
             Console.WriteLine("Employee created successfully!");

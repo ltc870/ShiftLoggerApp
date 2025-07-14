@@ -16,7 +16,30 @@ public class EmployeeService : IEmployeeService
     
     public Task<List<EmployeeDto>> GetAllEmployeesAsync()
     {
-        throw new NotImplementedException();
+        Console.Clear();
+        Console.WriteLine("Fetching all employees...");
+        Console.WriteLine("<-------------------------------------------->");
+        
+        var employees = _employeeRepository.GetAllEmployeesAsync();
+        
+        if (employees.Result.Count == 0)
+        {
+            Console.WriteLine("No employees found.");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return Task.FromResult(new List<EmployeeDto>());
+        }
+        
+        Console.WriteLine("Employees:");
+        foreach (var employee in employees.Result)
+        {
+            Console.WriteLine($"{employee.EmployeeId} - {employee.Name}");
+        }
+        
+        Console.WriteLine("<-------------------------------------------->");
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
+        return employees;
     }
 
     public Task<EmployeeDto> GetEmployeeByIdAsync()
@@ -27,7 +50,7 @@ public class EmployeeService : IEmployeeService
     public async Task<EmployeeDto> CreateEmployeeAsync()
     {
         Console.Clear();
-        Console.WriteLine("Create a new employee!");
+        Console.WriteLine("Create a new employee...");
         Console.WriteLine("<-------------------------------------------->");
         Console.Write("Enter employee name: ");
         string? employeeName = Console.ReadLine();

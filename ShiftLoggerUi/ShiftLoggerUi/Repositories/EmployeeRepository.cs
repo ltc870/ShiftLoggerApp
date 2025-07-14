@@ -29,14 +29,25 @@ public class EmployeeRepository : IEmployeeRepository
         }
     }
 
-    public Task<EmployeeDto> GetEmployeeByIdAsync(int id)
+    public async Task<EmployeeDto> GetEmployeeByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.GetAsync($"api/Employee/GetEmployeeById/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<EmployeeDto>();
+        }
+        else
+        {
+            string error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error fetching employee by ID: {response.StatusCode} - {error}");
+            return null;
+        }
+
     }
 
     public async Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto employee)
     {
-        HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Employee/CreateEmployee", employee);
+        var response = await _httpClient.PostAsJsonAsync("api/Employee/CreateEmployee", employee);
         if (response.IsSuccessStatusCode)
         {
             Console.WriteLine("Employee created successfully!");

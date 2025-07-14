@@ -16,15 +16,15 @@ public class EmployeeRepository : IEmployeeRepository
     
     public async Task<List<EmployeeDto>> GetAllEmployeesAsync()
     {
-        var employees = await _httpClient.GetAsync("api/Employee/GetAllEmployees");
-        if (employees.IsSuccessStatusCode)
+        var response = await _httpClient.GetAsync("api/Employee/GetAllEmployees");
+        if (response.IsSuccessStatusCode)
         {
-            return await employees.Content.ReadFromJsonAsync<List<EmployeeDto>>() ?? new List<EmployeeDto>();
+            return await response.Content.ReadFromJsonAsync<List<EmployeeDto>>() ?? new List<EmployeeDto>();
         }
         else
         {
-            string error = await employees.Content.ReadAsStringAsync();
-            Console.WriteLine($"Error fetching employees: {employees.StatusCode} - {error}");
+            string error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error fetching employees: {response.StatusCode} - {error}");
             return new List<EmployeeDto>();
         }
     }

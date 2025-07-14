@@ -89,7 +89,7 @@ public class RunProgramUtil
                     break;
                 case "2":
                     Console.WriteLine("View An Employee selected.");
-                    // Call method to view an employee
+                    await employeeService.GetEmployeeByIdAsync();
                     break;
                 case "3":
                     Console.WriteLine("Add An Employee selected.");

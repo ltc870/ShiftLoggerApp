@@ -1,3 +1,4 @@
+using ShiftLoggerUi.Repositories;
 using ShiftLoggerUi.Services;
 
 namespace ShiftLoggerUi.Utils;
@@ -58,7 +59,7 @@ public class RunProgramUtil
     {
         Console.Clear();
         bool employeeManagementRunning = true;
-        EmployeeService employeeService = new EmployeeService();
+        EmployeeService employeeService = new EmployeeService(new EmployeeRepository());
         
         
         while (employeeManagementRunning)
@@ -80,7 +81,7 @@ public class RunProgramUtil
                 case "0":
                     Console.Clear();
                     employeeManagementRunning = false;
-                    UserOptions();
+                    await UserOptions();
                     break;
                 case "1":
                     Console.WriteLine("View All Employees selected.");

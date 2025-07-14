@@ -1,15 +1,17 @@
 using System.Net.Http.Json;
 using ShiftLoggerUi.Dtos;
+using ShiftLoggerUi.Repositories;
 using ShiftLoggerUi.Services.Interfaces;
 
 namespace ShiftLoggerUi.Services;
 
 public class EmployeeService : IEmployeeService
 {
-
-    public EmployeeService()
+    private readonly IEmployeeRepository _employeeRepository;
+    
+    public EmployeeService(IEmployeeRepository employeeRepository)
     {
-        
+        _employeeRepository = employeeRepository;
     }
     
     public Task<List<EmployeeDto>> GetAllEmployeesAsync()
@@ -30,23 +32,10 @@ public class EmployeeService : IEmployeeService
         Console.Write("Enter employee name: ");
         string? employeeName = Console.ReadLine();
         EmployeeDto newEmployee = new EmployeeDto(employeeName);
-
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri("https://localhost:7145/");
-        HttpResponseMessage response = await client.PostAsJsonAsync("api/Employee/CreateEmployee", newEmployee);
-        if (response.IsSuccessStatusCode)
-        {
-            Console.WriteLine("Employee created successfully!");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
-            return await response.Content.ReadFromJsonAsync<EmployeeDto>();
-        }
-        else
-        {
-            string error = await response.Content.ReadAsStringAsync();
-            Console.WriteLine($"Error creating employee: {response.StatusCode} - {error}");
-            return null;
-        }
+        
+        var employeeDto = await _employeeRepository.CreateEmployeeAsync(newEmployee);
+        
+        return employeeDto;
     }
 
     public Task<EmployeeDto> UpdateEmployeeByIdAsync()

@@ -44,7 +44,27 @@ public class EmployeeService : IEmployeeService
 
     public Task<EmployeeDto> GetEmployeeByIdAsync()
     {
-        throw new NotImplementedException();
+        Console.Clear();
+        Console.WriteLine("Fetching employee by ID...");
+        GetAllEmployeesAsync();
+        Console.WriteLine("Which employee ID would you like to fetch?");
+        int employeeId;
+        while (!int.TryParse(Console.ReadLine(), out employeeId))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid employee ID.");
+        }
+        var employeeDto = _employeeRepository.GetEmployeeByIdAsync(employeeId);
+        if (employeeDto.Result == null)
+        {
+            Console.WriteLine($"Employee with ID {employeeId} not found.");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return Task.FromResult<EmployeeDto>(null);
+        }
+        Console.WriteLine($"Employee ID: {employeeDto.Result.EmployeeId}, Name: {employeeDto.Result.Name}");
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
+        return employeeDto;
     }
 
     public async Task<EmployeeDto> CreateEmployeeAsync()

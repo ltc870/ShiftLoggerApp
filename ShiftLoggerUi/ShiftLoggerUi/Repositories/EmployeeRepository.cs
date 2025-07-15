@@ -63,9 +63,22 @@ public class EmployeeRepository : IEmployeeRepository
         }
     }
 
-    public Task<EmployeeDto> UpdateEmployeeByIdAsync(int id, EmployeeDto employee)
+    public async Task<EmployeeDto> UpdateEmployeeByIdAsync(int id, EmployeeDto employee)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.PutAsJsonAsync($"api/Employee/UpdateEmployeeById/{id}", employee);
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Employee updated successfully!");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return await response.Content.ReadFromJsonAsync<EmployeeDto>();
+        }
+        else
+        {
+            string error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error updating employee: {response.StatusCode} - {error}");
+            return null;
+        }
     }
 
     public Task DeleteEmployeeByIdAsync(int id)

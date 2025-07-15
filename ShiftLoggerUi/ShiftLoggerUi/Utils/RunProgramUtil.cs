@@ -97,7 +97,7 @@ public class RunProgramUtil
                     break;
                 case "4":
                     Console.WriteLine("Update An Employee selected.");
-                    // Call method to update an employee
+                    await employeeService.UpdateEmployeeByIdAsync();
                     break;
                 case "5":
                     Console.WriteLine("Delete An Employee selected.");

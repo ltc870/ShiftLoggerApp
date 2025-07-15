@@ -45,7 +45,7 @@ public class EmployeeService : IEmployeeService
     public Task<EmployeeDto> GetEmployeeByIdAsync()
     {
         Console.Clear();
-        Console.WriteLine("Fetching employee by ID...");
+        Console.WriteLine("Fetching an employee by ID...");
         GetAllEmployeesAsync();
         Console.WriteLine("Which employee ID would you like to fetch?");
         int employeeId;
@@ -83,7 +83,38 @@ public class EmployeeService : IEmployeeService
 
     public Task<EmployeeDto> UpdateEmployeeByIdAsync()
     {
-        throw new NotImplementedException();
+        Console.Clear();
+        Console.WriteLine("Update an employee by ID...");
+        GetAllEmployeesAsync();
+        Console.WriteLine("Which employee ID would you like to update?");
+        int employeeId;
+        while(!int.TryParse(Console.ReadLine(), out employeeId))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid employee ID.");
+        }
+        Console.Write("Enter new employee name: ");
+        string? updatedName = Console.ReadLine();
+        EmployeeDto updatedEmployee = new EmployeeDto(updatedName, employeeId);
+        var employeeDto = _employeeRepository.GetEmployeeByIdAsync(employeeId);
+        if (employeeDto.Result == null)
+        {
+            Console.WriteLine($"Employee with ID {employeeId} not found.");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return Task.FromResult<EmployeeDto>(null);
+        }
+        var updatedEmployeeDto = _employeeRepository.UpdateEmployeeByIdAsync(employeeId, updatedEmployee);
+        if (updatedEmployeeDto.Result == null)
+        {
+            Console.WriteLine($"Failed to update employee with ID {employeeId}.");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return Task.FromResult<EmployeeDto>(null);
+        }
+        Console.WriteLine($"Employee ID: {updatedEmployeeDto.Result.EmployeeId} - Name: {updatedEmployeeDto.Result.Name}");
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
+        return updatedEmployeeDto;
     }
 
     public Task DeleteEmployeeByIdAsync()

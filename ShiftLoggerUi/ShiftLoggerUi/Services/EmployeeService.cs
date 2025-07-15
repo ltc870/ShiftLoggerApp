@@ -95,14 +95,6 @@ public class EmployeeService : IEmployeeService
         Console.Write("Enter new employee name: ");
         string? updatedName = Console.ReadLine();
         EmployeeDto updatedEmployee = new EmployeeDto(updatedName, employeeId);
-        var employeeDto = _employeeRepository.GetEmployeeByIdAsync(employeeId);
-        if (employeeDto.Result == null)
-        {
-            Console.WriteLine($"Employee with ID {employeeId} not found.");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
-            return Task.FromResult<EmployeeDto>(null);
-        }
         var updatedEmployeeDto = _employeeRepository.UpdateEmployeeByIdAsync(employeeId, updatedEmployee);
         if (updatedEmployeeDto.Result == null)
         {

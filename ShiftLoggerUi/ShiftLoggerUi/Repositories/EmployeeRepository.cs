@@ -81,20 +81,21 @@ public class EmployeeRepository : IEmployeeRepository
         }
     }
 
-    public Task DeleteEmployeeByIdAsync(int id)
+    public async Task<EmployeeDto> DeleteEmployeeByIdAsync(int id)
     {
-        var response = _httpClient.DeleteAsync($"api/Employee/DeleteEmployeeById/{id}");
-        if (response.IsCompletedSuccessfully)
+        var response = await _httpClient.DeleteAsync($"api/Employee/DeleteEmployeeById/{id}");
+        if (response.IsSuccessStatusCode)
         {
             Console.WriteLine("Employee deleted successfully");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
-            return Task.CompletedTask;
+            return await Task.FromResult<EmployeeDto>(null);
         }
         else
         {
-            Console.WriteLine($"Error deleting employee: {response.Status}");
-            return Task.FromException(new Exception("Failed to delete employee"));
+            string error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error deleting employee: {response.StatusCode} - {error}");
+            throw new Exception("Failed to delete employee");
         }
     }
 }

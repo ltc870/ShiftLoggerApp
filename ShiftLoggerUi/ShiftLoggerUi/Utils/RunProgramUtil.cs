@@ -101,7 +101,7 @@ public class RunProgramUtil
                     break;
                 case "5":
                     Console.WriteLine("Delete An Employee selected.");
-                    // Call method to delete an employee
+                    await employeeService.DeleteEmployeeByIdAsync();
                     break;
                 default:
                     Console.WriteLine("Invalid input, try again.");

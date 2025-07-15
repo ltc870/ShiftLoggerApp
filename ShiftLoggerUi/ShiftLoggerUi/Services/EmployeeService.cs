@@ -14,24 +14,24 @@ public class EmployeeService : IEmployeeService
         _employeeRepository = employeeRepository;
     }
     
-    public Task<List<EmployeeDto>> GetAllEmployeesAsync()
+    public async Task<List<EmployeeDto>> GetAllEmployeesAsync()
     {
         Console.Clear();
         Console.WriteLine("Fetching all employees...");
         Console.WriteLine("<-------------------------------------------->");
         
-        var employees = _employeeRepository.GetAllEmployeesAsync();
+        var employees = await _employeeRepository.GetAllEmployeesAsync();
         
-        if (employees.Result.Count == 0)
+        if (employees.Count == 0)
         {
             Console.WriteLine("No employees found.");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
-            return Task.FromResult(new List<EmployeeDto>());
+            return await Task.FromResult(new List<EmployeeDto>());
         }
         
         Console.WriteLine("Employees:");
-        foreach (var employee in employees.Result)
+        foreach (var employee in employees)
         {
             Console.WriteLine($"{employee.EmployeeId} - {employee.Name}");
         }
@@ -42,26 +42,26 @@ public class EmployeeService : IEmployeeService
         return employees;
     }
 
-    public Task<EmployeeDto> GetEmployeeByIdAsync()
+    public async Task<EmployeeDto> GetEmployeeByIdAsync()
     {
         Console.Clear();
         Console.WriteLine("Fetching an employee by ID...");
-        GetAllEmployeesAsync();
+        await GetAllEmployeesAsync();
         Console.WriteLine("Which employee ID would you like to fetch?");
         int employeeId;
         while (!int.TryParse(Console.ReadLine(), out employeeId))
         {
             Console.WriteLine("Invalid input. Please enter a valid employee ID.");
         }
-        var employeeDto = _employeeRepository.GetEmployeeByIdAsync(employeeId);
-        if (employeeDto.Result == null)
+        var employeeDto = await _employeeRepository.GetEmployeeByIdAsync(employeeId);
+        if (employeeDto == null)
         {
             Console.WriteLine($"Employee with ID {employeeId} not found.");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
-            return Task.FromResult<EmployeeDto>(null);
+            return await Task.FromResult<EmployeeDto>(null);
         }
-        Console.WriteLine($"Employee ID: {employeeDto.Result.EmployeeId}, Name: {employeeDto.Result.Name}");
+        Console.WriteLine($"Employee ID: {employeeDto.EmployeeId}, Name: {employeeDto.Name}");
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
         return employeeDto;
@@ -81,11 +81,11 @@ public class EmployeeService : IEmployeeService
         return employeeDto;
     }
 
-    public Task<EmployeeDto> UpdateEmployeeByIdAsync()
+    public async Task<EmployeeDto> UpdateEmployeeByIdAsync()
     {
         Console.Clear();
         Console.WriteLine("Update an employee by ID...");
-        GetAllEmployeesAsync();
+        await GetAllEmployeesAsync();
         Console.WriteLine("Which employee ID would you like to update?");
         int employeeId;
         while(!int.TryParse(Console.ReadLine(), out employeeId))
@@ -95,32 +95,32 @@ public class EmployeeService : IEmployeeService
         Console.Write("Enter new employee name: ");
         string? updatedName = Console.ReadLine();
         EmployeeDto updatedEmployee = new EmployeeDto(updatedName, employeeId);
-        var updatedEmployeeDto = _employeeRepository.UpdateEmployeeByIdAsync(employeeId, updatedEmployee);
-        if (updatedEmployeeDto.Result == null)
+        var updatedEmployeeDto = await _employeeRepository.UpdateEmployeeByIdAsync(employeeId, updatedEmployee);
+        if (updatedEmployeeDto == null)
         {
             Console.WriteLine($"Failed to update employee with ID {employeeId}.");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
-            return Task.FromResult<EmployeeDto>(null);
+            return await Task.FromResult<EmployeeDto>(null);
         }
-        Console.WriteLine($"Employee ID: {updatedEmployeeDto.Result.EmployeeId} - Name: {updatedEmployeeDto.Result.Name}");
+        Console.WriteLine($"Employee ID: {updatedEmployeeDto.EmployeeId} - Name: {updatedEmployeeDto.Name}");
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
         return updatedEmployeeDto;
     }
 
-    public Task DeleteEmployeeByIdAsync()
+    public async Task<Task<EmployeeDto>> DeleteEmployeeByIdAsync()
     {
         Console.Clear();
         Console.WriteLine("Delete an employee by ID...");
-        GetAllEmployeesAsync();
+        await GetAllEmployeesAsync();
         Console.WriteLine("Please type the ID of the employee would you like to delete");
         int employeeId;
         while (!int.TryParse(Console.ReadLine(), out employeeId))
         {
             Console.WriteLine("Invalid input. Please enter a valid employee ID.");
         }
-        _employeeRepository.DeleteEmployeeByIdAsync(employeeId);
-        return Task.CompletedTask;
+        await _employeeRepository.DeleteEmployeeByIdAsync(employeeId);
+        return Task.FromResult<EmployeeDto>(null);
     }
 }

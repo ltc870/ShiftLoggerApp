@@ -83,6 +83,18 @@ public class EmployeeRepository : IEmployeeRepository
 
     public Task DeleteEmployeeByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var response = _httpClient.DeleteAsync($"api/Employee/DeleteEmployeeById/{id}");
+        if (response.IsCompletedSuccessfully)
+        {
+            Console.WriteLine("Employee deleted successfully");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return Task.CompletedTask;
+        }
+        else
+        {
+            Console.WriteLine($"Error deleting employee: {response.Status}");
+            return Task.FromException(new Exception("Failed to delete employee"));
+        }
     }
 }

@@ -111,6 +111,16 @@ public class EmployeeService : IEmployeeService
 
     public Task DeleteEmployeeByIdAsync()
     {
-        throw new NotImplementedException();
+        Console.Clear();
+        Console.WriteLine("Delete an employee by ID...");
+        GetAllEmployeesAsync();
+        Console.WriteLine("Please type the ID of the employee would you like to delete");
+        int employeeId;
+        while (!int.TryParse(Console.ReadLine(), out employeeId))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid employee ID.");
+        }
+        _employeeRepository.DeleteEmployeeByIdAsync(employeeId);
+        return Task.CompletedTask;
     }
 }

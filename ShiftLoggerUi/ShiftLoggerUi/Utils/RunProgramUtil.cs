@@ -111,4 +111,10 @@ public class RunProgramUtil
             }
         }
     }
+
+    private static async Task ManageShifts()
+    {
+        Console.Clear();
+        bool shiftManagementRunning = true;
+    }
 }

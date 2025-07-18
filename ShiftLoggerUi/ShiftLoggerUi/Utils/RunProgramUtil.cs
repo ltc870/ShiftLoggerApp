@@ -116,5 +116,6 @@ public class RunProgramUtil
     {
         Console.Clear();
         bool shiftManagementRunning = true;
+        ShiftService shiftService = new ShiftService(new ShiftRepository(new HttpClient()));
     }
 }

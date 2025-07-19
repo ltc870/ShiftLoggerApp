@@ -4,7 +4,7 @@ using ShiftLoggerUi.Services.Interfaces;
 
 namespace ShiftLoggerUi.Services;
 
-public class ShiftService : IShfitService
+public class ShiftService : IShiftService
 {
     private readonly IShiftRepository _shiftRepository;
     
@@ -18,7 +18,7 @@ public class ShiftService : IShfitService
         throw new NotImplementedException();
     }
 
-    public Task<ShiftDto> GetShiftByIdAsync(int shiftId)
+    public Task<ShiftDto> GetShiftByIdAsync()
     {
         throw new NotImplementedException();
     }
@@ -28,18 +28,19 @@ public class ShiftService : IShfitService
         throw new NotImplementedException();
     }
 
-    public Task<ShiftDto> UpdateShiftByIdAsync(int shiftId, ShiftDto shiftDto)
+    public Task<ShiftDto> UpdateShiftByIdAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteShiftByIdAsync(int shiftId)
+    public Task<bool> DeleteShiftByIdAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<List<ShiftDto>> GetShiftsByEmployeeIdAsync(int employeeId)
+    public Task<List<ShiftDto>> GetShiftsByEmployeeIdAsync()
     {
         throw new NotImplementedException();
     }
+    
 }

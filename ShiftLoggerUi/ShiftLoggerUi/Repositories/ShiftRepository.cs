@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using ShiftLoggerUi.Dtos;
 
 namespace ShiftLoggerUi.Repositories;
@@ -22,9 +23,22 @@ public class ShiftRepository : IShiftRepository
         throw new NotImplementedException();
     }
 
-    public Task<ShiftDto> CreateShiftAsync()
+    public async Task<ShiftDto> CreateShiftAsync(ShiftDto shift)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.PostAsJsonAsync("api/Shift/CreateShift", shift);
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Shift created successfully!");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return await response.Content.ReadFromJsonAsync<ShiftDto>();
+        }
+        else
+        {
+            string error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error creating shift: {response.StatusCode} - {error}");
+            return null;
+        }
     }
 
     public Task<ShiftDto> UpdateShiftByIdAsync(int shiftId, ShiftDto shiftDto)

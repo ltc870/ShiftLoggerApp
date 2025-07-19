@@ -8,5 +8,5 @@ public interface IEmployeeService
     Task<EmployeeDto> GetEmployeeByIdAsync();
     Task<EmployeeDto> CreateEmployeeAsync();
     Task<EmployeeDto> UpdateEmployeeByIdAsync();
-    Task<Task<EmployeeDto>> DeleteEmployeeByIdAsync();
+    Task<bool> DeleteEmployeeByIdAsync();
 }

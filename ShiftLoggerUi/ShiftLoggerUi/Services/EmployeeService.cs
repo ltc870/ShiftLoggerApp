@@ -109,7 +109,7 @@ public class EmployeeService : IEmployeeService
         return updatedEmployeeDto;
     }
 
-    public async Task<Task<EmployeeDto>> DeleteEmployeeByIdAsync()
+    public async Task<bool> DeleteEmployeeByIdAsync()
     {
         Console.Clear();
         Console.WriteLine("Delete an employee by ID...");
@@ -120,7 +120,7 @@ public class EmployeeService : IEmployeeService
         {
             Console.WriteLine("Invalid input. Please enter a valid employee ID.");
         }
-        await _employeeRepository.DeleteEmployeeByIdAsync(employeeId);
-        return Task.FromResult<EmployeeDto>(null);
+        var success = await _employeeRepository.DeleteEmployeeByIdAsync(employeeId);
+        return true;
     }
 }

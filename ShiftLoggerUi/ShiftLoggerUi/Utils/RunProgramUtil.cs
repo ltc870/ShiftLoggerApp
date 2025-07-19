@@ -44,7 +44,7 @@ public class RunProgramUtil
                     break;
                 case "2":
                     Console.WriteLine("Manage Shifts selected.");
-                    // Call method to manage shifts
+                    await ManageShifts();
                     break;
                 default:
                     Console.WriteLine("Invalid input, try again.");
@@ -117,5 +117,59 @@ public class RunProgramUtil
         Console.Clear();
         bool shiftManagementRunning = true;
         ShiftService shiftService = new ShiftService(new ShiftRepository(new HttpClient()));
+
+        while (shiftManagementRunning)
+        {
+            Console.Clear();
+            Console.WriteLine("Shift Management Menu:");
+            Console.WriteLine("<---------------------------------------------------------->\n");
+            Console.WriteLine("Type 0 to Return to Main Menu.");
+            Console.WriteLine("Type 1 to View All Shifts");
+            Console.WriteLine("Type 2 To View A Shift");
+            Console.WriteLine("Type 3 To Add A Shift");
+            Console.WriteLine("Type 4 To Update A Shift");
+            Console.WriteLine("Type 5 To Delete A Shift");
+            Console.WriteLine("Type 6 To View Shifts By Employee");
+
+            string userInput = Console.ReadLine();
+
+            switch (userInput)
+            {
+                case "0":
+                    Console.Clear();
+                    shiftManagementRunning = false;
+                    await UserOptions();
+                    break;
+                case "1":
+                    Console.WriteLine("View all shifts selected.");
+                    // await shiftService.GetAllShiftsAsync();
+                    break;
+                case "2":
+                    Console.WriteLine("View a shift by ID selected.");
+                    // await shiftService.GetShiftByIdAsync();
+                    break;
+                case "3":
+                    Console.WriteLine("Add a shift selected.");
+                    // await shiftService.CreateShiftAsync();
+                    break;
+                case "4":
+                    Console.WriteLine("Update a shift selected.");
+                    // await shiftService.UpdateShiftByIdAsync();
+                    break;
+                case "5":
+                    Console.WriteLine("Delete a shift selected.");
+                    // await shiftService.DeleteShiftByIdAsync();
+                    break;
+                case "6":
+                    Console.WriteLine("View shifts by employee selected.");
+                    // await shiftService.GetShiftsByEmployeeAsync();
+                    break;
+                default:
+                    Console.WriteLine("Invalid input, try again.");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    break;
+            }
+        }
     }
 }

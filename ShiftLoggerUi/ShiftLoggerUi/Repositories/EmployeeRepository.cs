@@ -81,7 +81,7 @@ public class EmployeeRepository : IEmployeeRepository
         }
     }
 
-    public async Task<EmployeeDto> DeleteEmployeeByIdAsync(int id)
+    public async Task<bool> DeleteEmployeeByIdAsync(int id)
     {
         var response = await _httpClient.DeleteAsync($"api/Employee/DeleteEmployeeById/{id}");
         if (response.IsSuccessStatusCode)
@@ -89,7 +89,7 @@ public class EmployeeRepository : IEmployeeRepository
             Console.WriteLine("Employee deleted successfully");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
-            return await Task.FromResult<EmployeeDto>(null);
+            return true;
         }
         else
         {

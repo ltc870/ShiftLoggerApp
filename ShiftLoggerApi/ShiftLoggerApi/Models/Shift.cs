@@ -8,10 +8,13 @@ public class Shift
     [Key]
     public int ShiftId { get; set; }
     [Required]
-    [DataType(DataType.DateTime)]
+    [DataType(DataType.Date)]
+    public DateTime Date { get; set; }
+    [Required]
+    [DataType(DataType.Time)]
     public DateTime ShiftStart { get; set; }
     [Required]
-    [DataType(DataType.DateTime)]
+    [DataType(DataType.Time)]
     public DateTime ShiftEnd { get; set; }
     [Required]
     public TimeSpan ShiftDuration { get; set; }

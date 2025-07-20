@@ -21,7 +21,7 @@ public class ShiftService : IShiftService
         
         List<ShiftDto> shiftDtos = shifts.Select(shift => new ShiftDto(
             shift.ShiftId,
-            shift.Date,
+            shift.ShiftDate,
             shift.ShiftStart,
             shift.ShiftEnd,
             shift.EmployeeId)).ToList();
@@ -39,7 +39,7 @@ public class ShiftService : IShiftService
         }
         ShiftDto shiftDto = new ShiftDto(
             shift.ShiftId,
-            shift.Date,
+            shift.ShiftDate,
             shift.ShiftStart,
             shift.ShiftEnd,
             shift.EmployeeId);
@@ -52,6 +52,7 @@ public class ShiftService : IShiftService
         Shift shift = new Shift
         {
             ShiftId = shiftDto.ShiftId,
+            ShiftDate = shiftDto.ShiftDate,
             ShiftStart = shiftDto.ShiftStart,
             ShiftEnd = shiftDto.ShiftEnd,
             ShiftDuration = shiftDto.ShiftEnd - shiftDto.ShiftStart,
@@ -62,7 +63,7 @@ public class ShiftService : IShiftService
         
         return new ShiftDto(
             entry.ShiftId,
-            entry.Date,
+            entry.ShiftDate,
             entry.ShiftStart,
             entry.ShiftEnd,
             entry.EmployeeId);
@@ -74,11 +75,12 @@ public class ShiftService : IShiftService
         {
             Shift shift = new Shift()
             {
-                EmployeeId = id,
+                ShiftId = shiftDto.ShiftId,
+                ShiftDate = shiftDto.ShiftDate,
                 ShiftStart = shiftDto.ShiftStart,
                 ShiftEnd = shiftDto.ShiftEnd,
                 ShiftDuration = shiftDto.ShiftEnd - shiftDto.ShiftStart,
-                ShiftId = shiftDto.ShiftId
+                EmployeeId = id,
             };
 
             var updatedShift = await _shiftRepository.UpdateShiftByIdAsync(id, shift);
@@ -90,7 +92,7 @@ public class ShiftService : IShiftService
             
             ShiftDto updatedShiftDto = new ShiftDto(
                 updatedShift.ShiftId,
-                updatedShift.Date,
+                updatedShift.ShiftDate,
                 updatedShift.ShiftStart,
                 updatedShift.ShiftEnd,
                 updatedShift.EmployeeId);
@@ -130,7 +132,7 @@ public class ShiftService : IShiftService
             
             List<ShiftDto> shiftDtos = shifts.Select(shift => new ShiftDto(
                 shift.ShiftId,
-                shift.Date,
+                shift.ShiftDate,
                 shift.ShiftStart,
                 shift.ShiftEnd,
                 shift.EmployeeId)).ToList();

@@ -9,13 +9,13 @@ public class Shift
     public int ShiftId { get; set; }
     [Required]
     [DataType(DataType.Date)]
-    public DateTime Date { get; set; }
+    public DateTime ShiftDate { get; set; }
     [Required]
     [DataType(DataType.Time)]
-    public DateTime ShiftStart { get; set; }
+    public TimeSpan ShiftStart { get; set; }
     [Required]
     [DataType(DataType.Time)]
-    public DateTime ShiftEnd { get; set; }
+    public TimeSpan ShiftEnd { get; set; }
     [Required]
     public TimeSpan ShiftDuration { get; set; }
     [ForeignKey("Employee")]

@@ -5,7 +5,7 @@ using ShiftLoggerApi.Services.Interfaces;
 namespace ShiftLoggerApi.Controllers;
 
 
-[Microsoft.AspNetCore.Components.Route("api/[controller]")]
+[Route("api/[controller]")]
 public class ShiftController : BaseController
 {
     private readonly IShiftService _shiftService;

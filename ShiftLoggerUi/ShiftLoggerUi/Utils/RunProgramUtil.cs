@@ -116,7 +116,7 @@ public class RunProgramUtil
     {
         Console.Clear();
         bool shiftManagementRunning = true;
-        ShiftService shiftService = new ShiftService(new ShiftRepository(new HttpClient()));
+        ShiftService shiftService = new ShiftService(new EmployeeService(new EmployeeRepository(new HttpClient())), new ShiftRepository(new HttpClient()));
 
         while (shiftManagementRunning)
         {
@@ -150,7 +150,7 @@ public class RunProgramUtil
                     break;
                 case "3":
                     Console.WriteLine("Add a shift selected.");
-                    // await shiftService.CreateShiftAsync();
+                    await shiftService.CreateShiftAsync();
                     break;
                 case "4":
                     Console.WriteLine("Update a shift selected.");

@@ -31,7 +31,7 @@ public class ShiftRepository : IShiftRepository
             Console.WriteLine("Shift created successfully!");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
-            return await response.Content.ReadFromJsonAsync<ShiftDto>();
+            return await response.Content.ReadFromJsonAsync<ShiftDto>() ;
         }
         else
         {

@@ -1,6 +1,6 @@
 namespace ShiftLoggerUi.Dtos;
 
-public record ShiftDto(int ShiftId, DateTime ShiftStart, DateTime ShiftEnd, int EmployeeId)
+public record ShiftDto(DateTime ShiftDate, TimeSpan ShiftStart, TimeSpan ShiftEnd, int EmployeeId, int ShiftId = 0)
 {
     public TimeSpan ShiftDuration => ShiftEnd - ShiftStart;
 }

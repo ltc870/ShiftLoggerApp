@@ -18,7 +18,6 @@ public class EmployeeService : IEmployeeService
     {
         Console.Clear();
         Console.WriteLine("Fetching all employees...");
-        Console.WriteLine("<-------------------------------------------->");
         
         var employees = await _employeeRepository.GetAllEmployeesAsync();
         
@@ -31,6 +30,7 @@ public class EmployeeService : IEmployeeService
         }
         
         Console.WriteLine("Employees:");
+        Console.WriteLine("<-------------------------------------------->");
         foreach (var employee in employees)
         {
             Console.WriteLine($"{employee.EmployeeId} - {employee.Name}");

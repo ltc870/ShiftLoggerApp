@@ -1,11 +1,21 @@
 using ShiftLoggerUi.Repositories;
 using ShiftLoggerUi.Services;
+using ShiftLoggerUi.Services.Interfaces;
 
 namespace ShiftLoggerUi.Utils;
 
 public class RunProgramUtil
 {
-    public static async Task RunProgram()
+    private readonly IEmployeeService _employeeService;
+    private readonly IShiftService _shiftService;
+    
+    public RunProgramUtil(IEmployeeService employeeService, IShiftService shiftService)
+    {
+        _employeeService = employeeService;
+        _shiftService = shiftService;
+    }
+    
+    public async Task RunProgram()
     {
         Console.WriteLine("Welcome to the Shift Logger Application!");
         Console.WriteLine("Press any key to continue...");

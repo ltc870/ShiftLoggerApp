@@ -35,7 +35,7 @@ public class ShiftService : IShiftService
         Console.WriteLine("<-------------------------------------------->");
         foreach (var shift in shiftsDtoList)
         {
-            Console.WriteLine($"ShiftId - {shift.ShiftId}, Date - {shift.ShiftDate:yyyy-MM-dd}, Start - {shift.ShiftStart:hh\\:mm}, End - {shift.ShiftEnd:hh\\:mm}, EmployeeId - {shift.EmployeeId}");
+            Console.WriteLine($"ShiftId - {shift.ShiftId}, Date - {shift.ShiftDate:yyyy-MM-dd}, Start - {shift.ShiftStart:hh\\:mm}, End - {shift.ShiftEnd:hh\\:mm}, Duration - {shift.ShiftDuration}, EmployeeId - {shift.EmployeeId}");
         }
         Console.WriteLine("<-------------------------------------------->");
         Console.WriteLine("Press any key to continue...");

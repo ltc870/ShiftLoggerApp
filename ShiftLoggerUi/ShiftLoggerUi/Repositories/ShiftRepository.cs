@@ -12,9 +12,19 @@ public class ShiftRepository : IShiftRepository
         _httpClient = httpClient;
     }
 
-    public Task<List<ShiftDto>> GetAllShiftsAsync()
+    public async Task<List<ShiftDto>> GetAllShiftsAsync()
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.GetAsync("api/Shift/GetAllShifts");
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<List<ShiftDto>>() ?? new List<ShiftDto>();
+        }
+        else
+        {
+            string error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error fetching shifts: {response.StatusCode} - {error}");
+            return new List<ShiftDto>();
+        }
     }
 
     public Task<ShiftDto> GetShiftByIdAsync(int shiftId)

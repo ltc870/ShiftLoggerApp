@@ -23,7 +23,7 @@ public class RunProgramUtil
         await UserOptions();
     }
 
-    private static async Task UserOptions()
+    private async Task UserOptions()
     {
         Console.Clear();
         bool applicationRunning = true;
@@ -65,11 +65,11 @@ public class RunProgramUtil
         }
     }
 
-    private static async Task ManageEmployees()
+    private async Task ManageEmployees()
     {
         Console.Clear();
         bool employeeManagementRunning = true;
-        EmployeeService employeeService = new EmployeeService(new EmployeeRepository(new HttpClient()));
+        
         
         
         while (employeeManagementRunning)
@@ -95,23 +95,23 @@ public class RunProgramUtil
                     break;
                 case "1":
                     Console.WriteLine("View All Employees selected.");
-                    await employeeService.GetAllEmployeesAsync();
+                    await _employeeService.GetAllEmployeesAsync();
                     break;
                 case "2":
                     Console.WriteLine("View An Employee selected.");
-                    await employeeService.GetEmployeeByIdAsync();
+                    await _employeeService.GetEmployeeByIdAsync();
                     break;
                 case "3":
                     Console.WriteLine("Add An Employee selected.");
-                    await employeeService.CreateEmployeeAsync();
+                    await _employeeService.CreateEmployeeAsync();
                     break;
                 case "4":
                     Console.WriteLine("Update An Employee selected.");
-                    await employeeService.UpdateEmployeeByIdAsync();
+                    await _employeeService.UpdateEmployeeByIdAsync();
                     break;
                 case "5":
                     Console.WriteLine("Delete An Employee selected.");
-                    await employeeService.DeleteEmployeeByIdAsync();
+                    await _employeeService.DeleteEmployeeByIdAsync();
                     break;
                 default:
                     Console.WriteLine("Invalid input, try again.");
@@ -122,7 +122,7 @@ public class RunProgramUtil
         }
     }
 
-    private static async Task ManageShifts()
+    private async Task ManageShifts()
     {
         Console.Clear();
         bool shiftManagementRunning = true;
@@ -160,7 +160,7 @@ public class RunProgramUtil
                     break;
                 case "3":
                     Console.WriteLine("Add a shift selected.");
-                    await shiftService.CreateShiftAsync();
+                    await _shiftService.CreateShiftAsync();
                     break;
                 case "4":
                     Console.WriteLine("Update a shift selected.");

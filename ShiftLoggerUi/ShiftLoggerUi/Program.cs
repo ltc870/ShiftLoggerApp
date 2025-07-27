@@ -11,16 +11,18 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var host = Host.CreateDefaultBuilder(args).ConfigureServices((context, services) =>
+        var host = Host.CreateDefaultBuilder(args).ConfigureServices((services) =>
         {
-            services.AddHttpClient("ShiftLoggerApi", client =>
+            services.AddHttpClient<IShiftRepository, ShiftRepository>("ShiftLoggerApi", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7145/");
+            });
+            services.AddHttpClient<IEmployeeRepository, EmployeeRepository>("ShiftLoggerApi", client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7145/");
             });
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IShiftService, ShiftService>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<IShiftRepository, ShiftRepository>();
             services.AddSingleton<RunProgramUtil>();
         }).Build();
         

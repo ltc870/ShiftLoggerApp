@@ -11,7 +11,6 @@ public class EmployeeRepository : IEmployeeRepository
     public EmployeeRepository(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri("https://localhost:7145/");
     }
     
     public async Task<List<EmployeeDto>> GetAllEmployeesAsync()

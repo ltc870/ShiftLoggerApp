@@ -10,7 +10,6 @@ public class ShiftRepository : IShiftRepository
     public ShiftRepository(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri("https://localhost:7145/");
     }
 
     public Task<List<ShiftDto>> GetAllShiftsAsync()

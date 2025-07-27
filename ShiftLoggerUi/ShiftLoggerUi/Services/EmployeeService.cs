@@ -19,9 +19,9 @@ public class EmployeeService : IEmployeeService
         Console.Clear();
         Console.WriteLine("Fetching all employees...");
         
-        var employees = await _employeeRepository.GetAllEmployeesAsync();
+        var employeesDtoList = await _employeeRepository.GetAllEmployeesAsync();
         
-        if (employees.Count == 0)
+        if (employeesDtoList.Count == 0)
         {
             Console.WriteLine("No employees found.");
             Console.WriteLine("Press any key to continue...");
@@ -31,7 +31,7 @@ public class EmployeeService : IEmployeeService
         
         Console.WriteLine("Employees:");
         Console.WriteLine("<-------------------------------------------->");
-        foreach (var employee in employees)
+        foreach (var employee in employeesDtoList)
         {
             Console.WriteLine($"{employee.EmployeeId} - {employee.Name}");
         }
@@ -39,7 +39,7 @@ public class EmployeeService : IEmployeeService
         Console.WriteLine("<-------------------------------------------->");
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
-        return employees;
+        return employeesDtoList;
     }
 
     public async Task<EmployeeDto> GetEmployeeByIdAsync()

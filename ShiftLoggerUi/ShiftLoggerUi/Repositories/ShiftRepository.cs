@@ -27,9 +27,19 @@ public class ShiftRepository : IShiftRepository
         }
     }
 
-    public Task<ShiftDto> GetShiftByIdAsync(int shiftId)
+    public async Task<ShiftDto> GetShiftByIdAsync(int shiftId)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.GetAsync($"api/Shift/GetShiftById/{shiftId}");
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<ShiftDto>();
+        }
+        else
+        {
+            string error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error fetching shift by ID: {response.StatusCode} - {error}");
+            return null;
+        }
     }
 
     public async Task<ShiftDto> CreateShiftAsync(ShiftDto shift)

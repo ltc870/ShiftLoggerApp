@@ -43,9 +43,33 @@ public class ShiftService : IShiftService
         return shiftsDtoList;
     }
 
-    public Task<ShiftDto> GetShiftByIdAsync()
+    public async Task<ShiftDto> GetShiftByIdAsync()
     {
-        throw new NotImplementedException();
+        Console.Clear();
+        Console.WriteLine("Fetching a shift");
+        await GetAllShiftsAsync();
+        Console.WriteLine("Please enter the Shift ID you want to fetch:");
+        int shiftId;
+
+        while (!int.TryParse(Console.ReadLine(), out shiftId))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid Shift Id.");
+        }
+
+        var shiftDto = await _shiftRepository.GetShiftByIdAsync(shiftId);
+
+        if (shiftDto == null)
+        {
+            Console.WriteLine("Shift not found.");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return null;
+        }
+        
+        Console.WriteLine($"Shift Id: {shiftDto.ShiftId} - Date: {shiftDto.ShiftDate:yyyy-MM-dd}, Start: {shiftDto.ShiftStart:hh\\:mm}, End: {shiftDto.ShiftEnd:hh\\:mm}, Duration: {shiftDto.ShiftDuration}, EmployeeId: {shiftDto.EmployeeId}");
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey(); 
+        return shiftDto;
     }
 
     public async Task<ShiftDto> CreateShiftAsync()

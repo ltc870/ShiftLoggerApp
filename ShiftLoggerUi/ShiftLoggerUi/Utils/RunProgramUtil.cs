@@ -156,7 +156,7 @@ public class RunProgramUtil
                     break;
                 case "2":
                     Console.WriteLine("View a shift by ID selected.");
-                    // await shiftService.GetShiftByIdAsync();
+                    await _shiftService.GetShiftByIdAsync();
                     break;
                 case "3":
                     Console.WriteLine("Add a shift selected.");

@@ -60,9 +60,22 @@ public class ShiftRepository : IShiftRepository
         }
     }
 
-    public Task<ShiftDto> UpdateShiftByIdAsync(int shiftId, ShiftDto shiftDto)
+    public async Task<ShiftDto> UpdateShiftByIdAsync(int shiftId, ShiftDto shiftDto)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.PutAsJsonAsync($"api/Shift/UpdateShiftById/{shiftId}", shiftDto);
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Shift updated successfully!");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return await response.Content.ReadFromJsonAsync<ShiftDto>();
+        }
+        else
+        {
+            string error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error updating shift: {response.StatusCode} - {error}");
+            return null;
+        }
     }
 
     public Task<bool> DeleteShiftByIdAsync(int shiftId)
